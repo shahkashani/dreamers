@@ -1,0 +1,19 @@
+{
+  "name": "dreamers",
+  "version": "1.0.0",
+  "description": "Who is the dreamer?",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shahkashani/dreamers.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shahkashani/dreamers/issues"
+  },
+  "homepage": "https://github.com/shahkashani/dreamers#readme"
+}
