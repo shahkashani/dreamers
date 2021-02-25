@@ -1,5 +1,13 @@
 const { getImageBlocks } = require('./parsers');
 
+/**
+ * Currently supported effects:
+ *
+ * Overlay:
+ * 1) Add an image to the post
+ * 2) Use the tag #overlay
+ * 3) Or use the tag "#overlay: X%" to specify the overlay opacity, e.g. "#overlay: 20%"
+ */
 const EFFECT_OVERLAY_TAG = 'overlay';
 const EFFECT_TAGS = [EFFECT_OVERLAY_TAG];
 const DEFAULT_OVERLAY_OPACITY = 40;

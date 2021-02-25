@@ -1,5 +1,5 @@
 const tumblr = require('tumblr.js');
-const { getOldestPost } = require('./utils/posts');
+const { getNextPost } = require('./utils/posts');
 const { getCaption, getTextBlocks } = require('./utils/parsers');
 const { removeEffectTags, getEffects } = require('./utils/effects');
 
@@ -10,6 +10,7 @@ class Dreamers {
     accessTokenKey,
     accessTokenSecret,
     blogName,
+    ownerBlogName,
   }) {
     this.client = tumblr.createClient({
       consumer_key: consumerKey,
@@ -19,6 +20,7 @@ class Dreamers {
       returnPromises: true,
     });
     this.blogName = blogName;
+    this.ownerBlogName = ownerBlogName;
   }
 
   getCaptions({ content }) {
@@ -40,7 +42,11 @@ class Dreamers {
   }
 
   async getNextPost() {
-    const post = await getOldestPost(this.client, this.blogName);
+    const post = await getNextPost(
+      this.client,
+      this.blogName,
+      this.ownerBlogName
+    );
     if (!post) {
       return null;
     }

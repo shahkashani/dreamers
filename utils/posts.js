@@ -1,6 +1,6 @@
 const { sortBy, intersection } = require('lodash');
 
-const IGNORE_POSTS_WITH_TAGS = ['example post', 'instructions'];
+const IGNORE_POSTS_WITH_TAGS = ['instructions', 'faq', 'do not post', 'info'];
 
 const getAllPosts = async (client, blogName) => {
   const allResults = [];
@@ -21,15 +21,17 @@ const getAllPosts = async (client, blogName) => {
   return sortBy(allResults, 'timestamp');
 };
 
-const getOldestPost = async (client, blogName) => {
+const getNextPost = async (client, blogName, ownerBlogName) => {
   const posts = await getAllPosts(client, blogName);
   const filteredPosts = posts.filter(
-    ({ tags }) => intersection(tags, IGNORE_POSTS_WITH_TAGS).length === 0
+    ({ tags, author }) =>
+      author !== ownerBlogName &&
+      intersection(tags, IGNORE_POSTS_WITH_TAGS).length === 0
   );
   return filteredPosts.length > 0 ? filteredPosts[0] : null;
 };
 
 module.exports = {
   getAllPosts,
-  getOldestPost,
+  getNextPost,
 };
