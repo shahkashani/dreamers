@@ -2,6 +2,10 @@ const tumblr = require('tumblr.js');
 const { getNextPost } = require('./utils/posts');
 const { getCaption, getTextBlocks } = require('./utils/parsers');
 const { removeEffectTags, getEffects } = require('./utils/effects');
+const {
+  getPreviewRequestConfig,
+  removePreviewTags,
+} = require('./utils/preview');
 
 class Dreamers {
   constructor({
@@ -29,15 +33,26 @@ class Dreamers {
       .slice(0, 10);
   }
 
-  getConfig(post) {
+  getConfig(post, previewConfig) {
     const { tags, author, id } = post;
     const effects = getEffects(post);
+    const {
+      isCreateDraft,
+      post: passthrough,
+      tags: previewTags = [],
+      ids: previewIds = [],
+    } = previewConfig;
+    const postTags = removePreviewTags(removeEffectTags(tags));
+    const captions = this.getCaptions(post);
     return {
-      tags: removeEffectTags(tags),
-      captions: this.getCaptions(post),
-      author,
       id,
+      tags: [...previewTags, ...postTags],
+      deleteIds: isCreateDraft ? [] : [...previewIds, id],
+      captions,
+      passthrough,
+      author,
       effects,
+      isCreateDraft,
     };
   }
 
@@ -50,7 +65,15 @@ class Dreamers {
     if (!post) {
       return null;
     }
-    const config = this.getConfig(post);
+    const previewConfig = await getPreviewRequestConfig(
+      this.client,
+      this.blogName,
+      post
+    );
+    if (previewConfig.isCreateDraft && previewConfig.draft) {
+      return null;
+    }
+    const config = this.getConfig(post, previewConfig);
     return config;
   }
 

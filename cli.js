@@ -19,5 +19,6 @@ const dreamers = new Dreamers({
 });
 
 (async function() {
-  await dreamers.getNextPost();
+  const post = await dreamers.getNextPost();
+  console.log(post);
 })();

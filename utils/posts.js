@@ -2,12 +2,12 @@ const { sortBy, intersection } = require('lodash');
 
 const IGNORE_POSTS_WITH_TAGS = ['instructions', 'faq', 'do not post', 'info'];
 
-const getAllPosts = async (client, blogName) => {
+const getPosts = async (method, blogName) => {
   const allResults = [];
   let hasNextPage = true;
   let offset = 0;
   while (hasNextPage) {
-    const { posts, _links } = await client.blogPosts(blogName, {
+    const { posts, _links } = await method(blogName, {
       npf: true,
       offset,
     });
@@ -19,6 +19,14 @@ const getAllPosts = async (client, blogName) => {
     }
   }
   return sortBy(allResults, 'timestamp');
+};
+
+const getAllPosts = async (client, blogName) => {
+  return getPosts(client.blogPosts, blogName);
+};
+
+const getAllDrafts = async (client, blogName) => {
+  return getPosts(client.blogDrafts, blogName);
 };
 
 const getNextPost = async (client, blogName, ownerBlogName) => {
@@ -33,5 +41,6 @@ const getNextPost = async (client, blogName, ownerBlogName) => {
 
 module.exports = {
   getAllPosts,
+  getAllDrafts,
   getNextPost,
 };
