@@ -28,9 +28,14 @@ class Dreamers {
   }
 
   getCaptions({ content }) {
-    return getTextBlocks(content)
+    const blocks = getTextBlocks(content)
       .map((block) => getCaption(block))
-      .slice(0, 10);
+      .filter((c) => c.length > 0);
+    const noNewlines = blocks.reduce(
+      (memo, block) => [...memo, ...block.split('\n')],
+      []
+    );
+    return noNewlines.slice(0, 10);
   }
 
   getConfig(post, previewConfig) {
