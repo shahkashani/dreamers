@@ -18,7 +18,7 @@
   "homepage": "https://github.com/shahkashani/dreamers#readme",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "tumblr.js": "^4.0.1"
   }
 }
