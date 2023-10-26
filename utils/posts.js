@@ -22,11 +22,11 @@ const getPosts = async (method, blogName) => {
 };
 
 const getAllPosts = async (client, blogName) => {
-  return getPosts(client.blogPosts, blogName);
+  return getPosts(client.blogPosts.bind(client), blogName);
 };
 
 const getAllDrafts = async (client, blogName) => {
-  return getPosts(client.blogDrafts, blogName);
+  return getPosts(client.blogDrafts.bind(client), blogName);
 };
 
 const getNextPost = async (client, blogName, ownerBlogName) => {

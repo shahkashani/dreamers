@@ -21,7 +21,6 @@ class Dreamers {
       consumer_secret: consumerSecret,
       token: accessTokenKey,
       token_secret: accessTokenSecret,
-      returnPromises: true,
     });
     this.blogName = blogName;
     this.ownerBlogName = ownerBlogName;

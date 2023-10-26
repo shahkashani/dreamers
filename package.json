@@ -19,6 +19,6 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "lodash": "^4.17.20",
-    "tumblr.js": "^3.0.0"
+    "tumblr.js": "^4.0.1"
   }
 }
